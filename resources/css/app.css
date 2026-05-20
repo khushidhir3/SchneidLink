@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Leaflet container fix */
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #1A1F36;
+}
+::-webkit-scrollbar-thumb {
+    background: #3DCD58;
+    border-radius: 3px;
+}
+
+/* Pulse animation for urgent badges */
+@keyframes urgentPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+.animate-urgent {
+    animation: urgentPulse 1.5s ease-in-out infinite;
+}
