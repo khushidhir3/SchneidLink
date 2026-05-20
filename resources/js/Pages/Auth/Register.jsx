@@ -11,6 +11,8 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        role: 'client',
+        phone: '',
     });
 
     const submit = (e) => {
@@ -58,6 +60,36 @@ export default function Register() {
                     />
 
                     <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="role" value="I am a..." />
+                    <select
+                        id="role"
+                        name="role"
+                        value={data.role}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        onChange={(e) => setData('role', e.target.value)}
+                    >
+                        <option value="client">Client — Request Services</option>
+                        <option value="technician">Technician — Field Work</option>
+                        <option value="dispatcher">Dispatcher — Manage Jobs</option>
+                        <option value="admin">Admin — Full Access</option>
+                    </select>
+                    <InputError message={errors.role} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="phone" value="Phone (optional)" />
+                    <TextInput
+                        id="phone"
+                        type="tel"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('phone', e.target.value)}
+                    />
+                    <InputError message={errors.phone} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
