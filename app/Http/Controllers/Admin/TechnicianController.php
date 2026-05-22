@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use App\Models\Technician;
@@ -9,20 +7,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-
 class TechnicianController extends Controller
 {
     public function index()
     {
         $technicians = Technician::with('user', 'skills')->orderBy('created_at', 'desc')->get();
         $skills = Skill::all();
-
         return Inertia::render('Admin/Technicians/Index', [
             'technicians' => $technicians,
             'skills' => $skills,
         ]);
     }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -35,7 +30,6 @@ class TechnicianController extends Controller
             'skills.*.proficiency' => 'in:beginner,intermediate,expert',
             'skills.*.experience_years' => 'integer|min:0|max:50',
         ]);
-
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -43,14 +37,12 @@ class TechnicianController extends Controller
             'role' => 'technician',
             'phone' => $validated['phone'] ?? null,
         ]);
-
         $technician = Technician::create([
             'user_id' => $user->id,
             'employee_code' => 'SE-' . strtoupper(substr(md5($user->id . now()), 0, 6)),
             'availability_status' => 'offline',
             'rating_avg' => 0, 'total_jobs' => 0,
         ]);
-
         if (!empty($validated['skills'])) {
             foreach ($validated['skills'] as $skill) {
                 $technician->skills()->attach($skill['id'], [
@@ -59,7 +51,6 @@ class TechnicianController extends Controller
                 ]);
             }
         }
-
         return back()->with('success', 'Technician created.');
     }
 }

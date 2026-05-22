@@ -7,7 +7,6 @@ export default function Index({ requests }) {
     return (
         <AppLayout title="All Service Requests">
             <Head title="Service Requests" />
-            
             <div className="rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden">
                 <table className="w-full text-left text-sm">
                     <thead>

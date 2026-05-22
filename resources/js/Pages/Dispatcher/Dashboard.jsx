@@ -16,7 +16,6 @@ export default function Dashboard({ stats, pendingRequests, availableTechnicians
         <AppLayout title="Dispatch Center">
             <Head title="Dispatch Center" />
 
-            {/* Stats */}
             <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <StatsCard title="Pending Requests" value={stats.pending_requests} icon="📋" color="orange" />
                 <StatsCard title="Available Techs" value={stats.available_technicians} icon="👷" color="schneider" />
@@ -24,9 +23,7 @@ export default function Dashboard({ stats, pendingRequests, availableTechnicians
                 <StatsCard title="Completed Today" value={stats.completed_today} icon="✅" color="blue" />
             </div>
 
-            {/* Two-column layout */}
             <div className="grid gap-6 lg:grid-cols-2">
-                {/* Left: Pending Requests */}
                 <div>
                     <h3 className="mb-4 text-lg font-semibold text-dark-800">Pending Requests</h3>
                     <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
@@ -56,7 +53,6 @@ export default function Dashboard({ stats, pendingRequests, availableTechnicians
                     </div>
                 </div>
 
-                {/* Right: Available Technicians */}
                 <div>
                     <h3 className="mb-4 text-lg font-semibold text-dark-800">Available Technicians</h3>
                     <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">

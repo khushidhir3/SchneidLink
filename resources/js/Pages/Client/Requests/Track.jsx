@@ -17,10 +17,8 @@ export default function Track({ serviceRequest }) {
     const isCompleted = dispatch?.status === 'completed';
     const showMap = dispatch && ['en_route', 'arrived'].includes(dispatch.status);
 
-    // Rating form
     const { data, setData, post, processing } = useForm({ score: 5, comment: '' });
 
-    // Real-time location updates
     useEffect(() => {
         if (!window.Echo || !serviceRequest.id) return;
         const channel = window.Echo.private(`request.${serviceRequest.id}`);
@@ -29,7 +27,7 @@ export default function Track({ serviceRequest }) {
             setTechLocation({ lat: e.lat, lng: e.lng });
         });
         channel.listen('.dispatch.status.updated', () => {
-            window.location.reload(); // Simple reload on status change
+            window.location.reload(); 
         });
 
         return () => {
@@ -39,9 +37,7 @@ export default function Track({ serviceRequest }) {
     }, [serviceRequest.id]);
 
     const markers = [];
-    // Client location
     markers.push({ lat: serviceRequest.location_lat, lng: serviceRequest.location_lng, color: 'blue', popup: `<b>Job Site</b><br/>${serviceRequest.location_address}` });
-    // Technician location
     if (techLocation?.lat && techLocation?.lng) {
         markers.push({ lat: techLocation.lat, lng: techLocation.lng, color: 'green', popup: `<b>Technician</b><br/>${dispatch?.technician?.user?.name || 'En Route'}` });
     }
@@ -56,9 +52,7 @@ export default function Track({ serviceRequest }) {
             <Head title="Track Request" />
 
             <div className="grid gap-6 lg:grid-cols-3">
-                {/* Left: Details & Timeline */}
                 <div className="lg:col-span-1 space-y-6">
-                    {/* Request Info */}
                     <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                         <h3 className="text-lg font-bold text-dark-800">{serviceRequest.title}</h3>
                         <p className="mt-2 text-sm text-gray-600">{serviceRequest.description}</p>
@@ -75,7 +69,6 @@ export default function Track({ serviceRequest }) {
                         )}
                     </div>
 
-                    {/* Status Timeline */}
                     <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                         <h4 className="text-sm font-semibold text-dark-800 mb-4">Progress</h4>
                         <div className="space-y-0">
@@ -101,7 +94,6 @@ export default function Track({ serviceRequest }) {
                         </div>
                     </div>
 
-                    {/* Rating form */}
                     {isCompleted && !dispatch?.rating && (
                         <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                             <h4 className="text-sm font-semibold text-dark-800 mb-4">Rate Your Experience</h4>
@@ -126,7 +118,6 @@ export default function Track({ serviceRequest }) {
                     )}
                 </div>
 
-                {/* Right: Map */}
                 <div className="lg:col-span-2">
                     <div className="rounded-2xl bg-white p-4 shadow-lg border border-gray-100">
                         <h4 className="text-sm font-semibold text-dark-800 mb-3">

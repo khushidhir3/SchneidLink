@@ -7,7 +7,6 @@ export default function Show({ serviceRequest }) {
     return (
         <AppLayout title="Request Details">
             <Head title={`Request - ${serviceRequest.title}`} />
-            
             <div className="max-w-4xl rounded-2xl bg-white p-8 shadow-lg border border-gray-100">
                 <div className="flex items-start justify-between">
                     <div>
@@ -25,7 +24,6 @@ export default function Show({ serviceRequest }) {
                         <h3 className="font-semibold text-gray-700 uppercase tracking-wide text-xs">Description</h3>
                         <p className="mt-2 text-gray-600 text-sm leading-relaxed">{serviceRequest.description}</p>
                     </div>
-                    
                     <div className="rounded-xl bg-gray-50 p-4 border border-gray-100">
                         <h3 className="font-semibold text-gray-700 uppercase tracking-wide text-xs mb-3">Job Details</h3>
                         <div className="space-y-2 text-sm text-gray-600">
@@ -53,7 +51,6 @@ export default function Show({ serviceRequest }) {
                         </div>
                     </div>
                 )}
-                
                 <div className="mt-8 flex gap-3">
                     <Link href="/dispatcher/requests" className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
                         ← Back to Requests

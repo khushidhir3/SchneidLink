@@ -2,7 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
 
-var MapSection = React.lazy(function() { return import('./MapSection'); });
+// var MapSection = React.lazy(function() { return import('./MapSection'); });
 
 export default function MapDashboard() {
   var _useState1 = useState([]);
@@ -59,7 +59,6 @@ export default function MapDashboard() {
     <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#e2e8f0', fontFamily: "'Inter', 'Figtree', sans-serif" }}>
       <Head title="SchneidLink - Dispatch Map" />
 
-      {/* Header */}
       <header style={{
         background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
         borderBottom: '1px solid #334155',
@@ -94,13 +93,10 @@ export default function MapDashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
       <div style={{ padding: '24px 32px', display: 'flex', gap: '24px', height: 'calc(100vh - 73px)' }}>
 
-        {/* Left Sidebar */}
         <div style={{ width: '340px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-          {/* Create Quest Card */}
           <div style={{
             background: 'linear-gradient(135deg, #1e293b 0%, #162032 100%)',
             border: '1px solid #334155', borderRadius: '16px', padding: '24px',
@@ -125,7 +121,6 @@ export default function MapDashboard() {
             </p>
           </div>
 
-          {/* Status Message */}
           {message ? (
             <div style={{
               background: '#162032', border: '1px solid rgba(34,197,94,0.25)',
@@ -135,7 +130,6 @@ export default function MapDashboard() {
             </div>
           ) : null}
 
-          {/* Active Quests Log */}
           <div style={{
             background: 'linear-gradient(135deg, #1e293b 0%, #162032 100%)',
             border: '1px solid #334155', borderRadius: '16px', padding: '24px', flex: 1,
@@ -188,7 +182,6 @@ export default function MapDashboard() {
             )}
           </div>
 
-          {/* Team Status */}
           <div style={{
             background: 'linear-gradient(135deg, #1e293b 0%, #162032 100%)',
             border: '1px solid #334155', borderRadius: '16px', padding: '16px',
@@ -207,7 +200,6 @@ export default function MapDashboard() {
           </div>
         </div>
 
-        {/* Map Area */}
         <div style={{
           flex: 1, borderRadius: '16px', overflow: 'hidden',
           border: '1px solid #334155', position: 'relative',
@@ -220,7 +212,8 @@ export default function MapDashboard() {
               Loading map...
             </div>
           }>
-            <MapSection quests={quests} technicians={technicians} onAcceptQuest={handleAcceptQuest} />
+            {/* <MapSection quests={quests} technicians={technicians} onAcceptQuest={handleAcceptQuest} /> */}
+            <div style={{ color: '#94a3b8', padding: '20px', textAlign: 'center' }}>Map Component Temporarily Unavailable</div>
           </Suspense>
         </div>
       </div>

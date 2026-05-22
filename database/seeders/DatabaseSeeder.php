@@ -1,7 +1,5 @@
 <?php
-
 namespace Database\Seeders;
-
 use App\Models\Dispatch;
 use App\Models\Notification;
 use App\Models\Rating;
@@ -12,12 +10,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── Skills ──────────────────────────────────────────
         $skillsData = [
             ['name' => 'Circuit Breaker Repair',    'category' => 'electrical'],
             ['name' => 'Wiring & Cabling',          'category' => 'electrical'],
@@ -32,13 +28,10 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Network Setup',              'category' => 'networking'],
             ['name' => 'Industrial IoT',             'category' => 'networking'],
         ];
-
         $skills = [];
         foreach ($skillsData as $s) {
             $skills[] = Skill::create($s);
         }
-
-        // ── Admin ───────────────────────────────────────────
         User::create([
             'name'     => 'Admin User',
             'email'    => 'admin@schneider.com',
@@ -46,8 +39,6 @@ class DatabaseSeeder extends Seeder
             'role'     => 'admin',
             'phone'    => '+91-9000000001',
         ]);
-
-        // ── Dispatcher ──────────────────────────────────────
         $dispatcher = User::create([
             'name'     => 'Sarah Dispatcher',
             'email'    => 'dispatcher@schneider.com',
@@ -55,14 +46,13 @@ class DatabaseSeeder extends Seeder
             'role'     => 'dispatcher',
             'phone'    => '+91-9000000002',
         ]);
-
-        // ── Technicians ─────────────────────────────────────
         $techUsers = [
             ['name' => 'Rahul Sharma',   'email' => 'rahul@schneider.com',   'lat' => 28.6292, 'lng' => 77.2190],
             ['name' => 'Amit Patel',     'email' => 'amit@schneider.com',    'lat' => 28.6100, 'lng' => 77.2300],
             ['name' => 'Priya Singh',    'email' => 'priya@schneider.com',   'lat' => 28.6350, 'lng' => 77.2050],
+            ['name' => 'Arjun Verma',    'email' => 'arjun@schneider.com',   'lat' => 28.6400, 'lng' => 77.2200],
+            ['name' => 'Kavita Das',     'email' => 'kavita@schneider.com',  'lat' => 28.6150, 'lng' => 77.2500],
         ];
-
         $technicians = [];
         foreach ($techUsers as $i => $tu) {
             $user = User::create([
@@ -72,7 +62,6 @@ class DatabaseSeeder extends Seeder
                 'role'     => 'technician',
                 'phone'    => '+91-900000000' . ($i + 3),
             ]);
-
             $tech = Technician::create([
                 'user_id'             => $user->id,
                 'employee_code'       => 'SE-' . str_pad($i + 1, 4, '0', STR_PAD_LEFT),
@@ -83,8 +72,6 @@ class DatabaseSeeder extends Seeder
                 'rating_avg'          => round(3.5 + ($i * 0.5), 1),
                 'total_jobs'          => 10 + ($i * 5),
             ]);
-
-            // Attach 2-3 skills
             $skillSubset = array_slice($skills, $i * 2, 3);
             foreach ($skillSubset as $skill) {
                 $tech->skills()->attach($skill->id, [
@@ -92,19 +79,15 @@ class DatabaseSeeder extends Seeder
                     'experience_years' => $i + 2,
                 ]);
             }
-
             $technicians[] = $tech;
         }
-
-        // ── Clients ─────────────────────────────────────────
         $client1 = User::create([
-            'name'     => 'Vikram Client',
+            'name'     => 'Khushi',
             'email'    => 'client1@example.com',
             'password' => Hash::make('password'),
             'role'     => 'client',
             'phone'    => '+91-9000000010',
         ]);
-
         $client2 = User::create([
             'name'     => 'Neha Client',
             'email'    => 'client2@example.com',
@@ -112,8 +95,6 @@ class DatabaseSeeder extends Seeder
             'role'     => 'client',
             'phone'    => '+91-9000000011',
         ]);
-
-        // ── Service Requests ────────────────────────────────
         $requests = [
             [
                 'client_id'        => $client1->id,
@@ -164,15 +145,47 @@ class DatabaseSeeder extends Seeder
                 'location_address' => 'Substation 7, Nehru Place, New Delhi',
                 'requested_at'     => Carbon::now()->subDays(1),
             ],
+            [
+                'client_id'        => $client1->id,
+                'title'            => 'Router configuration failing',
+                'description'      => 'Main network router is dropping packets and needs immediate reconfiguration.',
+                'category'         => 'networking',
+                'priority'         => 'high',
+                'status'           => 'pending',
+                'location_lat'     => 28.6180,
+                'location_lng'     => 77.2120,
+                'location_address' => 'IT Park, Tower B, New Delhi',
+                'requested_at'     => Carbon::now()->subMinutes(30),
+            ],
+            [
+                'client_id'        => $client2->id,
+                'title'            => 'SCADA display frozen',
+                'description'      => 'The SCADA monitoring display in the control room is frozen and unresponsive.',
+                'category'         => 'plc',
+                'priority'         => 'urgent',
+                'status'           => 'pending',
+                'location_lat'     => 28.6320,
+                'location_lng'     => 77.2180,
+                'location_address' => 'Control Room, Okhla Phase 2, New Delhi',
+                'requested_at'     => Carbon::now()->subMinutes(15),
+            ],
+            [
+                'client_id'        => $client1->id,
+                'title'            => 'Routine safety audit',
+                'description'      => 'Bi-annual safety audit for the entire electrical grid.',
+                'category'         => 'inspection',
+                'priority'         => 'low',
+                'status'           => 'pending',
+                'location_lat'     => 28.6220,
+                'location_lng'     => 77.2250,
+                'location_address' => 'Grid Station 4, New Delhi',
+                'requested_at'     => Carbon::now()->subHours(5),
+            ],
         ];
-
         $createdRequests = [];
         foreach ($requests as $r) {
             $createdRequests[] = ServiceRequest::create($r);
         }
-
-        // ── Dispatches ──────────────────────────────────────
-        // Completed dispatch for first request
         $dispatch1 = Dispatch::create([
             'request_id'    => $createdRequests[0]->id,
             'technician_id' => $technicians[0]->id,
@@ -185,8 +198,6 @@ class DatabaseSeeder extends Seeder
             'completed_at'  => Carbon::now()->subDays(4),
             'distance_km'   => 3.2,
         ]);
-
-        // Rating for completed job
         Rating::create([
             'dispatch_id'   => $dispatch1->id,
             'rated_by'      => $client1->id,
@@ -194,8 +205,6 @@ class DatabaseSeeder extends Seeder
             'score'         => 5,
             'comment'       => 'Excellent work! Fixed the issue quickly.',
         ]);
-
-        // Assigned dispatch for 4th request
         Dispatch::create([
             'request_id'    => $createdRequests[3]->id,
             'technician_id' => $technicians[2]->id,
@@ -204,8 +213,6 @@ class DatabaseSeeder extends Seeder
             'assigned_at'   => Carbon::now()->subHours(3),
             'distance_km'   => 5.8,
         ]);
-
-        // ── Notifications ───────────────────────────────────
         Notification::create([
             'user_id' => $client1->id,
             'type'    => 'job_completed',
@@ -213,7 +220,6 @@ class DatabaseSeeder extends Seeder
             'data'    => ['request_id' => $createdRequests[0]->id],
             'is_read' => true,
         ]);
-
         Notification::create([
             'user_id' => $client2->id,
             'type'    => 'dispatch_assigned',
@@ -221,7 +227,6 @@ class DatabaseSeeder extends Seeder
             'data'    => ['request_id' => $createdRequests[3]->id],
             'is_read' => false,
         ]);
-
-        echo "✅ Seeded: 1 admin, 1 dispatcher, 3 technicians, 2 clients, 12 skills, 4 requests, 2 dispatches\n";
+        echo "✅ Seeded: 1 admin, 1 dispatcher, 5 technicians, 2 clients, 12 skills, 7 requests, 2 dispatches\n";
     }
 }

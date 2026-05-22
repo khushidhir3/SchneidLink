@@ -5,7 +5,6 @@ export default function Welcome({ canLogin, canRegister }) {
         <>
             <Head title="Welcome" />
             <div className="min-h-screen bg-dark-900 text-white">
-                {/* Nav */}
                 <nav className="flex items-center justify-between px-6 py-4 lg:px-16">
                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-schneider-300 to-schneider-500 text-white font-bold shadow-lg">
@@ -30,7 +29,6 @@ export default function Welcome({ canLogin, canRegister }) {
                     </div>
                 </nav>
 
-                {/* Hero */}
                 <div className="mx-auto max-w-6xl px-6 py-24 lg:px-16 lg:py-32">
                     <div className="text-center">
                         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-schneider-300/10 px-4 py-1.5 text-sm font-medium text-schneider-300 border border-schneider-300/20">
@@ -65,7 +63,6 @@ export default function Welcome({ canLogin, canRegister }) {
                         </div>
                     </div>
 
-                    {/* Feature cards */}
                     <div className="mt-24 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {[
                             { icon: '📋', title: 'Service Requests', desc: 'Clients raise requests with location, priority, and category.' },
@@ -83,7 +80,6 @@ export default function Welcome({ canLogin, canRegister }) {
                         ))}
                     </div>
 
-                    {/* Role cards */}
                     <div className="mt-20">
                         <h2 className="text-center text-2xl font-bold mb-10">Four Roles, One Platform</h2>
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -109,9 +105,46 @@ export default function Welcome({ canLogin, canRegister }) {
                             ))}
                         </div>
                     </div>
+
+                    <div className="mt-32 border-t border-dark-800 pt-20 pb-10">
+                        <div className="text-center mb-16">
+                            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-schneider-300/10 px-4 py-1.5 text-sm font-medium text-schneider-300 border border-schneider-300/20">
+                                ⭐ Testimonials
+                            </div>
+                            <h2 className="text-3xl font-extrabold lg:text-4xl">Customer <span className="bg-gradient-to-r from-schneider-300 to-schneider-500 bg-clip-text text-transparent">Success Stories</span></h2>
+                            <p className="mt-4 text-gray-400 max-w-2xl mx-auto">See how industry leaders are using Schneider FieldDispatch to transform their service operations and delight their customers.</p>
+                        </div>
+                        <div className="grid gap-6 md:grid-cols-3">
+                            {[
+                                { name: 'Amaan', role: 'Operations Director at TechFix', quote: 'Since implementing FieldDispatch, our first-time fix rate has jumped by 35%. The smart matching algorithm ensures we always send the right person for the job.', rating: 5 },
+                                { name: 'Ronit', role: 'Fleet Manager at Elevate Systems', quote: 'The real-time tracking feature has completely eliminated "where is my technician" calls to our dispatch center. Our clients love the transparency.', rating: 5 },
+                                { name: 'Malay', role: 'VP of Service at Global HVAC', quote: 'We scaled our field operations across three new regions without adding any dispatch headcount. The automation capabilities are simply unmatched.', rating: 5 },
+                            ].map((testimonial, i) => (
+                                <div key={i} className="rounded-3xl bg-gradient-to-b from-dark-800 to-dark-900 border border-dark-700 p-8 shadow-xl relative overflow-hidden group hover:border-schneider-300/30 transition-all">
+                                    <div className="absolute top-0 right-0 p-6 text-6xl text-dark-700/50 group-hover:text-schneider-300/10 transition-colors font-serif leading-none">"</div>
+                                    <div className="flex gap-1 mb-6">
+                                        {[...Array(testimonial.rating)].map((_, j) => (
+                                            <span key={j} className="text-schneider-300 text-lg">★</span>
+                                        ))}
+                                    </div>
+                                    <p className="text-gray-300 mb-8 relative z-10 leading-relaxed">
+                                        "{testimonial.quote}"
+                                    </p>
+                                    <div className="flex items-center gap-4 border-t border-dark-700/50 pt-6">
+                                        <div className="h-12 w-12 rounded-full bg-dark-700 flex items-center justify-center text-lg border border-dark-600 shadow-inner">
+                                            👤
+                                        </div>
+                                        <div>
+                                            <div className="font-bold text-white">{testimonial.name}</div>
+                                            <div className="text-sm text-schneider-300/80">{testimonial.role}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
-                {/* Footer */}
                 <footer className="border-t border-dark-800 px-6 py-8 text-center">
                     <p className="text-sm text-gray-600">
                         Schneider FieldDispatch · Smart India Hackathon 2019 · Built with Laravel, Inertia, React

@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Models;
-
 use MongoDB\Laravel\Eloquent\Model;
-
 class TechnicianLocation extends Model
 {
-    public $timestamps = false; // append-only, no updated_at
-
+    public $timestamps = false;
     protected $fillable = [
         'technician_id',
         'lat',
@@ -16,7 +12,6 @@ class TechnicianLocation extends Model
         'recorded_at',
         'created_at',
     ];
-
     protected function casts(): array
     {
         return [
@@ -27,9 +22,6 @@ class TechnicianLocation extends Model
             'created_at'  => 'datetime',
         ];
     }
-
-    // ── Relationships ───────────────────────────────────────
-
     public function technician()
     {
         return $this->belongsTo(Technician::class);

@@ -13,6 +13,12 @@ export default function Index({ users, filters }) {
         router.get('/admin/users', { role: role || undefined }, { preserveState: true, replace: true });
     };
 
+    const handleDelete = (id) => {
+        if (confirm('Are you sure you want to delete this user?')) {
+            router.delete(`/admin/users/${id}`, { preserveScroll: true });
+        }
+    };
+
     const submit = (e) => {
         e.preventDefault();
         post('/admin/users', { onSuccess: () => { reset(); setShowCreate(false); } });
@@ -39,7 +45,6 @@ export default function Index({ users, filters }) {
                 </button>
             </div>
 
-            {/* Create form */}
             {showCreate && (
                 <div className="mb-6 rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                     <h3 className="text-sm font-semibold text-dark-800 mb-4">Create New User</h3>
@@ -67,7 +72,6 @@ export default function Index({ users, filters }) {
                 </div>
             )}
 
-            {/* Table */}
             <div className="overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100">
                 <table className="w-full text-left text-sm">
                     <thead>
@@ -76,6 +80,7 @@ export default function Index({ users, filters }) {
                             <th className="px-6 py-3 text-xs font-semibold uppercase text-gray-500">Email</th>
                             <th className="px-6 py-3 text-xs font-semibold uppercase text-gray-500">Role</th>
                             <th className="px-6 py-3 text-xs font-semibold uppercase text-gray-500">Joined</th>
+                            <th className="px-6 py-3 text-xs font-semibold uppercase text-gray-500 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -85,6 +90,12 @@ export default function Index({ users, filters }) {
                                 <td className="px-6 py-4 text-gray-500">{u.email}</td>
                                 <td className="px-6 py-4"><StatusBadge status={u.role === 'admin' ? 'completed' : u.role === 'dispatcher' ? 'assigned' : u.role === 'technician' ? 'en_route' : 'pending'} /></td>
                                 <td className="px-6 py-4 text-gray-500">{new Date(u.created_at).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-right">
+                                    <button onClick={() => handleDelete(u.id)}
+                                        className="rounded bg-red-100 px-3 py-1 text-xs font-bold text-red-600 hover:bg-red-200 transition-colors">
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

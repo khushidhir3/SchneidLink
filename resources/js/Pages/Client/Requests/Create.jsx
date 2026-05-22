@@ -39,7 +39,6 @@ export default function Create() {
                     <h2 className="text-xl font-bold text-dark-800 mb-6">Create Service Request</h2>
 
                     <form onSubmit={submit} className="space-y-5">
-                        {/* Title */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                             <input type="text" value={data.title} onChange={e => setData('title', e.target.value)}
@@ -48,7 +47,6 @@ export default function Create() {
                             {errors.title && <p className="mt-1 text-xs text-red-500">{errors.title}</p>}
                         </div>
 
-                        {/* Description */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                             <textarea value={data.description} onChange={e => setData('description', e.target.value)}
@@ -57,7 +55,6 @@ export default function Create() {
                             {errors.description && <p className="mt-1 text-xs text-red-500">{errors.description}</p>}
                         </div>
 
-                        {/* Category & Priority */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -75,7 +72,6 @@ export default function Create() {
                             </div>
                         </div>
 
-                        {/* Location */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Location Address</label>
                             <input type="text" value={data.location_address} onChange={e => setData('location_address', e.target.value)}
@@ -102,14 +98,12 @@ export default function Create() {
                             📍 {geoLoading ? 'Getting location...' : 'Use My Location'}
                         </button>
 
-                        {/* Attachments */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Attachments (optional)</label>
                             <input type="file" multiple onChange={e => setData('attachments', Array.from(e.target.files))}
                                 className="w-full text-sm text-gray-500 file:mr-4 file:rounded-lg file:border-0 file:bg-schneider-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-schneider-600 hover:file:bg-schneider-100" />
                         </div>
 
-                        {/* Submit */}
                         <button type="submit" disabled={processing}
                             className="w-full rounded-xl bg-gradient-to-r from-schneider-300 to-schneider-500 py-3 text-sm font-semibold text-white shadow-lg shadow-schneider-300/25 transition-all hover:shadow-xl disabled:opacity-50">
                             {processing ? 'Submitting...' : 'Submit Request'}

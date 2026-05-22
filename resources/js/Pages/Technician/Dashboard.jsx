@@ -5,7 +5,6 @@ import { Head, Link, router } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 export default function Dashboard({ technician, activeDispatch, pendingDispatches, todayCompleted }) {
-    // Send location updates every 30 seconds when available or on job
     useEffect(() => {
         if (technician.availability_status === 'offline') return;
         const sendLocation = () => {
@@ -32,7 +31,6 @@ export default function Dashboard({ technician, activeDispatch, pendingDispatche
         <AppLayout title="Technician Dashboard">
             <Head title="Technician Dashboard" />
 
-            {/* Availability Toggle */}
             <div className="mb-6 flex items-center justify-between rounded-2xl bg-white p-5 shadow-lg border border-gray-100">
                 <div>
                     <h3 className="text-sm font-semibold text-dark-800">Your Status</h3>
@@ -50,14 +48,12 @@ export default function Dashboard({ technician, activeDispatch, pendingDispatche
                 )}
             </div>
 
-            {/* Stats */}
             <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-3">
                 <StatsCard title="Today's Jobs" value={todayCompleted} icon="📋" color="schneider" />
                 <StatsCard title="Rating" value={technician.rating_avg?.toFixed(1) || '0.0'} icon="⭐" color="orange" />
                 <StatsCard title="Total Jobs" value={technician.total_jobs} icon="🔧" color="blue" />
             </div>
 
-            {/* Active Job */}
             {activeDispatch && (
                 <div className="mb-6 rounded-2xl bg-gradient-to-br from-schneider-300/5 to-schneider-500/5 p-6 shadow-lg border-2 border-schneider-300/30">
                     <div className="flex items-center justify-between mb-4">
@@ -95,7 +91,6 @@ export default function Dashboard({ technician, activeDispatch, pendingDispatche
                 </div>
             )}
 
-            {/* Pending Job Requests */}
             {pendingDispatches.length > 0 && (
                 <div>
                     <h3 className="text-lg font-semibold text-dark-800 mb-4">Pending Requests</h3>

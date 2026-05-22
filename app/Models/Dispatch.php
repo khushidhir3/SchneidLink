@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Models;
-
 use MongoDB\Laravel\Eloquent\Model;
-
 class Dispatch extends Model
 {
     protected $table = 'dispatches';
-
     protected $fillable = [
         'request_id',
         'technician_id',
@@ -21,7 +17,6 @@ class Dispatch extends Model
         'distance_km',
         'technician_notes',
     ];
-
     protected function casts(): array
     {
         return [
@@ -33,24 +28,18 @@ class Dispatch extends Model
             'distance_km'  => 'float',
         ];
     }
-
-    // ── Relationships ───────────────────────────────────────
-
     public function serviceRequest()
     {
         return $this->belongsTo(ServiceRequest::class, 'request_id');
     }
-
     public function technician()
     {
         return $this->belongsTo(Technician::class);
     }
-
     public function dispatcher()
     {
         return $this->belongsTo(User::class, 'dispatcher_id');
     }
-
     public function rating()
     {
         return $this->hasOne(Rating::class);

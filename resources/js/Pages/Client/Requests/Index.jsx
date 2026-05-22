@@ -12,7 +12,6 @@ export default function Index({ requests, filters }) {
         <AppLayout title="My Requests">
             <Head title="My Requests" />
 
-            {/* Filters */}
             <div className="mb-6 flex flex-wrap items-center gap-3">
                 <select
                     value={filters.status || ''}
@@ -39,7 +38,6 @@ export default function Index({ requests, filters }) {
                 </Link>
             </div>
 
-            {/* List */}
             <div className="overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100">
                 <table className="w-full text-left">
                     <thead>

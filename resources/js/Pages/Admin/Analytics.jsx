@@ -13,7 +13,6 @@ export default function Analytics({ chartData, categoryBreakdown, topTechnicians
             <Head title="Analytics" />
 
             <div className="space-y-8">
-                {/* Line chart */}
                 <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                     <h3 className="text-lg font-semibold text-dark-800 mb-4">Jobs Completed — Last 30 Days</h3>
                     <ResponsiveContainer width="100%" height={350}>
@@ -28,7 +27,6 @@ export default function Analytics({ chartData, categoryBreakdown, topTechnicians
                 </div>
 
                 <div className="grid gap-6 lg:grid-cols-2">
-                    {/* Pie */}
                     <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                         <h3 className="text-lg font-semibold text-dark-800 mb-4">Category Distribution</h3>
                         <ResponsiveContainer width="100%" height={300}>
@@ -41,7 +39,6 @@ export default function Analytics({ chartData, categoryBreakdown, topTechnicians
                         </ResponsiveContainer>
                     </div>
 
-                    {/* Top techs */}
                     <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                         <h3 className="text-lg font-semibold text-dark-800 mb-4">Top Technicians</h3>
                         <div className="space-y-3">

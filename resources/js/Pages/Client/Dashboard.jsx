@@ -9,7 +9,6 @@ export default function Dashboard({ stats, recentRequests }) {
         <AppLayout title="Dashboard">
             <Head title="Dashboard" />
 
-            {/* Stats */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                 <StatsCard title="Total Requests" value={stats.total} icon="📋" color="blue" />
                 <StatsCard title="Pending" value={stats.pending} icon="⏳" color="orange" />
@@ -17,7 +16,6 @@ export default function Dashboard({ stats, recentRequests }) {
                 <StatsCard title="Completed" value={stats.completed} icon="✅" color="schneider" />
             </div>
 
-            {/* Actions */}
             <div className="mt-8 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-dark-800">Recent Requests</h3>
                 <Link
@@ -28,7 +26,6 @@ export default function Dashboard({ stats, recentRequests }) {
                 </Link>
             </div>
 
-            {/* Table */}
             <div className="mt-4 overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">

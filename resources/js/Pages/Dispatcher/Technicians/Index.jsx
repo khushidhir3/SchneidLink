@@ -5,7 +5,6 @@ export default function Index({ technicians }) {
     return (
         <AppLayout title="Technician Fleet">
             <Head title="Technician Fleet" />
-            
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {technicians.map(tech => (
                     <div key={tech.id} className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100 flex flex-col items-center text-center hover:border-schneider-300 transition-colors">
@@ -14,7 +13,6 @@ export default function Index({ technicians }) {
                         </div>
                         <h3 className="mt-4 font-bold text-lg text-dark-800">{tech.user?.name}</h3>
                         <p className="text-sm text-gray-500">{tech.employee_code}</p>
-                        
                         <div className="mt-4 flex flex-wrap justify-center gap-1.5">
                             {tech.skills?.map(skill => (
                                 <span key={skill.id} className="px-2.5 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-600">
@@ -22,7 +20,6 @@ export default function Index({ technicians }) {
                                 </span>
                             ))}
                         </div>
-                        
                         <div className="mt-6 flex w-full justify-between border-t pt-4 text-sm">
                             <div className="text-center">
                                 <div className="font-bold text-dark-800">⭐ {tech.rating_avg.toFixed(1)}</div>

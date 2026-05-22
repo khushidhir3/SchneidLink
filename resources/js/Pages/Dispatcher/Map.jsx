@@ -26,7 +26,6 @@ export default function Map({ technicians, pendingRequests }) {
             <Head title="Live Map" />
 
             <div className="grid gap-6 lg:grid-cols-4">
-                {/* Map */}
                 <div className="lg:col-span-3 rounded-2xl bg-white p-4 shadow-lg border border-gray-100">
                     <div className="mb-3 flex items-center gap-4 text-xs">
                         <span className="flex items-center gap-1"><span className="h-3 w-3 rounded-full bg-green-500" /> Available</span>
@@ -37,7 +36,6 @@ export default function Map({ technicians, pendingRequests }) {
                     <MapView markers={markers} height="calc(100vh - 200px)" onMarkerClick={m => setSelected(m)} />
                 </div>
 
-                {/* Panel */}
                 <div className="space-y-4">
                     <div className="rounded-2xl bg-white p-5 shadow-lg border border-gray-100">
                         <h4 className="text-sm font-semibold text-dark-800 mb-3">Legend</h4>

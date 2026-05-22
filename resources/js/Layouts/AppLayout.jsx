@@ -23,7 +23,6 @@ const navItems = {
         { label: 'Users', href: '/admin/users', icon: '👥' },
         { label: 'Technicians', href: '/admin/technicians', icon: '👷' },
         { label: 'Analytics', href: '/admin/analytics', icon: '📈' },
-        // Admin also sees dispatcher routes
         { label: 'Dispatch', href: '/dispatcher/dashboard', icon: '📡' },
         { label: 'Live Map', href: '/dispatcher/map', icon: '🗺️' },
     ],
@@ -40,14 +39,11 @@ export default function AppLayout({ children, title }) {
 
     return (
         <div className="flex h-screen bg-gray-50">
-            {/* Mobile overlay */}
             {sidebarOpen && (
                 <div className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} />
             )}
 
-            {/* Sidebar */}
             <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col bg-dark-800 transition-transform duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                {/* Logo */}
                 <div className="flex h-16 items-center gap-3 border-b border-dark-700 px-6">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-schneider-300 to-schneider-500 text-white font-bold text-sm shadow-lg">
                         SF
@@ -58,7 +54,6 @@ export default function AppLayout({ children, title }) {
                     </div>
                 </div>
 
-                {/* Nav items */}
                 <nav className="flex-1 overflow-y-auto px-3 py-4">
                     <div className="space-y-1">
                         {items.map((item) => {
@@ -82,7 +77,6 @@ export default function AppLayout({ children, title }) {
                     </div>
                 </nav>
 
-                {/* User section */}
                 <div className="border-t border-dark-700 p-4">
                     <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-dark-600 text-sm font-semibold text-schneider-300">
@@ -110,9 +104,7 @@ export default function AppLayout({ children, title }) {
                 </div>
             </aside>
 
-            {/* Main content */}
             <div className="flex flex-1 flex-col overflow-hidden">
-                {/* Top bar */}
                 <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 lg:px-8 shadow-sm">
                     <div className="flex items-center gap-4">
                         <button
@@ -130,7 +122,6 @@ export default function AppLayout({ children, title }) {
                     </div>
                 </header>
 
-                {/* Page content */}
                 <main className="flex-1 overflow-y-auto p-4 lg:p-8">
                     {children}
                 </main>

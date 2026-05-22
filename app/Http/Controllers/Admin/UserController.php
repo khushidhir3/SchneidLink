@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -17,13 +14,11 @@ class UserController extends Controller
             $query->where('role', $request->role);
         }
         $users = $query->orderBy('created_at', 'desc')->paginate(20);
-
         return Inertia::render('Admin/Users/Index', [
             'users' => $users,
             'filters' => $request->only(['role']),
         ]);
     }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -33,7 +28,6 @@ class UserController extends Controller
             'role' => 'required|in:client,technician,dispatcher,admin',
             'phone' => 'nullable|string|max:20',
         ]);
-
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -41,7 +35,6 @@ class UserController extends Controller
             'role' => $validated['role'],
             'phone' => $validated['phone'] ?? null,
         ]);
-
         if ($validated['role'] === 'technician') {
             $user->technician()->create([
                 'employee_code' => 'SE-' . strtoupper(substr(md5($user->id . now()), 0, 6)),
@@ -49,10 +42,8 @@ class UserController extends Controller
                 'rating_avg' => 0, 'total_jobs' => 0,
             ]);
         }
-
         return back()->with('success', 'User created.');
     }
-
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -62,8 +53,20 @@ class UserController extends Controller
             'role' => 'required|in:client,technician,dispatcher,admin',
             'phone' => 'nullable|string|max:20',
         ]);
-
         $user->update($validated);
         return back()->with('success', 'User updated.');
+    }
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Clean up related records to prevent "ghost" data errors
+        if ($user->technician) {
+            $user->technician->delete();
+        }
+        $user->customNotifications()->delete();
+        
+        $user->delete();
+        return back()->with('success', 'User deleted successfully.');
     }
 }

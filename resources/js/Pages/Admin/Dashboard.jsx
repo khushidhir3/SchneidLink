@@ -12,7 +12,6 @@ export default function Dashboard({ stats, chartData, categoryBreakdown, topTech
         <AppLayout title="Admin Dashboard">
             <Head title="Admin Dashboard" />
 
-            {/* KPI Cards */}
             <div className="mb-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
                 <StatsCard title="Total Users" value={stats.total_users} icon="👥" color="blue" />
                 <StatsCard title="Technicians" value={stats.total_technicians} icon="👷" color="schneider" />
@@ -20,9 +19,7 @@ export default function Dashboard({ stats, chartData, categoryBreakdown, topTech
                 <StatsCard title="Avg Rating" value={stats.avg_rating?.toFixed(1) || '0.0'} icon="⭐" color="orange" />
             </div>
 
-            {/* Charts row */}
             <div className="mb-8 grid gap-6 lg:grid-cols-3">
-                {/* Line Chart */}
                 <div className="lg:col-span-2 rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                     <h3 className="text-sm font-semibold text-dark-800 mb-4">Jobs Completed — Last 30 Days</h3>
                     <ResponsiveContainer width="100%" height={280}>
@@ -36,7 +33,6 @@ export default function Dashboard({ stats, chartData, categoryBreakdown, topTech
                     </ResponsiveContainer>
                 </div>
 
-                {/* Pie Chart */}
                 <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                     <h3 className="text-sm font-semibold text-dark-800 mb-4">Jobs by Category</h3>
                     {pieData.length === 0 ? (
@@ -55,7 +51,6 @@ export default function Dashboard({ stats, chartData, categoryBreakdown, topTech
                 </div>
             </div>
 
-            {/* Top Technicians */}
             <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                 <h3 className="text-sm font-semibold text-dark-800 mb-4">Top 5 Technicians</h3>
                 <div className="overflow-x-auto">

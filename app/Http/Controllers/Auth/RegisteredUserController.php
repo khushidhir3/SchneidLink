@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -13,22 +11,12 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
     }
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -38,7 +26,6 @@ class RegisteredUserController extends Controller
             'role'     => 'required|in:client,technician,dispatcher,admin',
             'phone'    => 'nullable|string|max:20',
         ]);
-
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
@@ -46,8 +33,6 @@ class RegisteredUserController extends Controller
             'role'     => $request->role,
             'phone'    => $request->phone,
         ]);
-
-        // If registering as a technician, create the technician profile
         if ($request->role === 'technician') {
             $user->technician()->create([
                 'employee_code'       => 'SE-' . strtoupper(substr(md5($user->id . now()), 0, 6)),
@@ -56,11 +41,8 @@ class RegisteredUserController extends Controller
                 'total_jobs'          => 0,
             ]);
         }
-
         event(new Registered($user));
-
         Auth::login($user);
-
         return redirect($user->dashboardRoute());
     }
 }

@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Models;
-
 use MongoDB\Laravel\Eloquent\Model;
-
 class Notification extends Model
 {
     protected $table = 'notifications_custom';
-
     protected $fillable = [
         'user_id',
         'type',
@@ -15,7 +11,6 @@ class Notification extends Model
         'data',
         'is_read',
     ];
-
     protected function casts(): array
     {
         return [
@@ -23,9 +18,6 @@ class Notification extends Model
             'is_read' => 'boolean',
         ];
     }
-
-    // ── Relationships ───────────────────────────────────────
-
     public function user()
     {
         return $this->belongsTo(User::class);

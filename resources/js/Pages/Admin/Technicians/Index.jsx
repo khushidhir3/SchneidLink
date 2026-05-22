@@ -76,7 +76,6 @@ export default function Index({ technicians, skills }) {
                 </div>
             )}
 
-            {/* Table */}
             <div className="overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100">
                 <table className="w-full text-left text-sm">
                     <thead>

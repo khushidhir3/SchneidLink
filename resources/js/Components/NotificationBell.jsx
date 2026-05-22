@@ -7,10 +7,8 @@ export default function NotificationBell({ userId }) {
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
     useEffect(() => {
-        // Fetch initial notifications
         axios.get('/notifications').then(res => setNotifications(res.data)).catch(() => {});
 
-        // Listen for real-time notifications
         if (window.Echo && userId) {
             const channel = window.Echo.private(`user.${userId}`);
             channel.listen('.notification.new', (data) => {

@@ -43,7 +43,6 @@ export default function Show({ dispatch }) {
                         </div>
                     </div>
 
-                    {/* Action buttons */}
                     {nextAction && (
                         <div className="rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
                             {nextAction.status === 'completed' && (

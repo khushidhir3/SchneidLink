@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Models;
-
 use MongoDB\Laravel\Eloquent\Model;
-
 class ServiceRequest extends Model
 {
     protected $fillable = [
@@ -20,7 +17,6 @@ class ServiceRequest extends Model
         'requested_at',
         'resolved_at',
     ];
-
     protected function casts(): array
     {
         return [
@@ -31,14 +27,10 @@ class ServiceRequest extends Model
             'resolved_at'  => 'datetime',
         ];
     }
-
-    // ── Relationships ───────────────────────────────────────
-
     public function client()
     {
         return $this->belongsTo(User::class, 'client_id');
     }
-
     public function dispatch()
     {
         return $this->hasOne(Dispatch::class, 'request_id');
