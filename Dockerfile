@@ -33,3 +33,5 @@ RUN composer install --no-dev --optimize-autoloader
 # Production configurations
 ENV PHP_OPCACHE_ENABLE=1 \
     AUTORUN_ENABLED=true
+
+EXPOSE 8080
