@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: PHP Application Container
-FROM serversideup/php:8.3-fpm-nginx-alpine
+FROM serversideup/php:8.4-fpm-nginx-alpine
 
 # Switch to root to install the MongoDB PHP extension
 USER root
