@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function NotificationBell({ userId }) {
+export default function NotificationBell({ userId, role }) {
     const [notifications, setNotifications] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const unreadCount = notifications.filter(n => !n.is_read).length;
@@ -10,14 +10,27 @@ export default function NotificationBell({ userId }) {
         axios.get('/notifications').then(res => setNotifications(res.data)).catch(() => {});
 
         if (window.Echo && userId) {
-            const channel = window.Echo.private(`user.${userId}`);
-            channel.listen('.notification.new', (data) => {
+            // Listen on user-specific channel
+            const userChannel = window.Echo.private(`user.${userId}`);
+            userChannel.listen('.notification.new', (data) => {
                 setNotifications(prev => [{ ...data, is_read: false, created_at: new Date().toISOString() }, ...prev]);
             });
 
-            return () => channel.stopListening('.notification.new');
+            // Admin users also listen on shared 'admins' channel
+            let adminChannel = null;
+            if (role === 'admin') {
+                adminChannel = window.Echo.private('admins');
+                adminChannel.listen('.admin.notification', (data) => {
+                    setNotifications(prev => [{ ...data, is_read: false, created_at: new Date().toISOString() }, ...prev]);
+                });
+            }
+
+            return () => {
+                userChannel.stopListening('.notification.new');
+                if (adminChannel) adminChannel.stopListening('.admin.notification');
+            };
         }
-    }, [userId]);
+    }, [userId, role]);
 
     const markAsRead = (id) => {
         axios.put(`/notifications/${id}/read`).then(() => {

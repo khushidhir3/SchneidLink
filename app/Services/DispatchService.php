@@ -84,6 +84,18 @@ class DispatchService
                 'priority'    => $request->priority,
             ]
         );
+        // Notify admins about the new dispatch
+        $this->notificationService->notifyAdminByCategory(
+            $request->category,
+            'dispatch_created',
+            "Technician {$technician->user->name} assigned to: {$request->title}",
+            [
+                'dispatch_id'    => $dispatch->id,
+                'request_id'     => $request->id,
+                'technician_name'=> $technician->user->name,
+                'priority'       => $request->priority,
+            ]
+        );
         return $dispatch;
     }
     public function completeJob(Dispatch $dispatch): void
@@ -111,6 +123,17 @@ class DispatchService
             [
                 'request_id'  => $request->id,
                 'dispatch_id' => $dispatch->id,
+            ]
+        );
+        // Notify admins about completed job
+        $this->notificationService->notifyAdminByCategory(
+            $request->category,
+            'job_completed_admin',
+            "Job completed: \"{$request->title}\" by {$technician->user->name}",
+            [
+                'request_id'      => $request->id,
+                'dispatch_id'     => $dispatch->id,
+                'technician_name' => $technician->user->name,
             ]
         );
     }

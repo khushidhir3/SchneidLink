@@ -10,5 +10,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        // Bind the public path dynamically to ensure assets and paths resolve correctly in serverless runtime
+        $this->app->bind('path.public', function () {
+            return base_path('public');
+        });
     }
 }

@@ -118,7 +118,7 @@ export default function AppLayout({ children, title }) {
                         {title && <h2 className="text-lg font-semibold text-dark-800">{title}</h2>}
                     </div>
                     <div className="flex items-center gap-3">
-                        <NotificationBell userId={user?.id} />
+                        <NotificationBell userId={user?.id} role={role} />
                     </div>
                 </header>
 

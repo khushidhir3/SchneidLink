@@ -32,19 +32,21 @@ class DatabaseSeeder extends Seeder
         foreach ($skillsData as $s) {
             $skills[] = Skill::create($s);
         }
-        User::create([
-            'name'     => 'Admin User',
-            'email'    => 'admin@schneider.com',
-            'password' => Hash::make('password'),
-            'role'     => 'admin',
-            'phone'    => '+91-9000000001',
+        $admin = User::create([
+            'name'      => 'Admin User',
+            'email'     => 'admin@schneider.com',
+            'password'  => Hash::make('password'),
+            'role'      => 'admin',
+            'phone'     => '+91-9000000001',
+            'user_code' => 'ADM-000001',
         ]);
         $dispatcher = User::create([
-            'name'     => 'Sarah Dispatcher',
-            'email'    => 'dispatcher@schneider.com',
-            'password' => Hash::make('password'),
-            'role'     => 'dispatcher',
-            'phone'    => '+91-9000000002',
+            'name'      => 'Sarah Dispatcher',
+            'email'     => 'dispatcher@schneider.com',
+            'password'  => Hash::make('password'),
+            'role'      => 'dispatcher',
+            'phone'     => '+91-9000000002',
+            'user_code' => 'DSP-000001',
         ]);
         $techUsers = [
             ['name' => 'Rahul Sharma',   'email' => 'rahul@schneider.com',   'lat' => 28.6292, 'lng' => 77.2190],
@@ -56,11 +58,12 @@ class DatabaseSeeder extends Seeder
         $technicians = [];
         foreach ($techUsers as $i => $tu) {
             $user = User::create([
-                'name'     => $tu['name'],
-                'email'    => $tu['email'],
-                'password' => Hash::make('password'),
-                'role'     => 'technician',
-                'phone'    => '+91-900000000' . ($i + 3),
+                'name'      => $tu['name'],
+                'email'     => $tu['email'],
+                'password'  => Hash::make('password'),
+                'role'      => 'technician',
+                'phone'     => '+91-900000000' . ($i + 3),
+                'user_code' => 'TECH-' . str_pad($i + 1, 4, '0', STR_PAD_LEFT),
             ]);
             $tech = Technician::create([
                 'user_id'             => $user->id,
@@ -82,18 +85,20 @@ class DatabaseSeeder extends Seeder
             $technicians[] = $tech;
         }
         $client1 = User::create([
-            'name'     => 'Khushi',
-            'email'    => 'client1@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'client',
-            'phone'    => '+91-9000000010',
+            'name'      => 'Khushi',
+            'email'     => 'client1@example.com',
+            'password'  => Hash::make('password'),
+            'role'      => 'client',
+            'phone'     => '+91-9000000010',
+            'user_code' => 'CLT-000001',
         ]);
         $client2 = User::create([
-            'name'     => 'Neha Client',
-            'email'    => 'client2@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'client',
-            'phone'    => '+91-9000000011',
+            'name'      => 'Neha Client',
+            'email'     => 'client2@example.com',
+            'password'  => Hash::make('password'),
+            'role'      => 'client',
+            'phone'     => '+91-9000000011',
+            'user_code' => 'CLT-000002',
         ]);
         $requests = [
             [
@@ -227,6 +232,28 @@ class DatabaseSeeder extends Seeder
             'data'    => ['request_id' => $createdRequests[3]->id],
             'is_read' => false,
         ]);
-        echo "✅ Seeded: 1 admin, 1 dispatcher, 5 technicians, 2 clients, 12 skills, 7 requests, 2 dispatches\n";
+        // Admin notifications — so admin bell is populated on fresh setup
+        Notification::create([
+            'user_id' => $admin->id,
+            'type'    => 'dispatch_created',
+            'message' => 'Technician Rahul Sharma assigned to: Main breaker keeps tripping',
+            'data'    => ['request_id' => $createdRequests[0]->id, 'category' => 'electrical'],
+            'is_read' => true,
+        ]);
+        Notification::create([
+            'user_id' => $admin->id,
+            'type'    => 'job_completed_admin',
+            'message' => 'Job completed: "Main breaker keeps tripping" by Rahul Sharma',
+            'data'    => ['request_id' => $createdRequests[0]->id, 'category' => 'electrical'],
+            'is_read' => false,
+        ]);
+        Notification::create([
+            'user_id' => $admin->id,
+            'type'    => 'new_request',
+            'message' => 'New urgent service request: "HVAC not cooling in server room"',
+            'data'    => ['request_id' => $createdRequests[1]->id, 'category' => 'hvac', 'priority' => 'high'],
+            'is_read' => false,
+        ]);
+        echo "✅ Seeded: 1 admin, 1 dispatcher, 5 technicians, 2 clients, 12 skills, 7 requests, 2 dispatches, 5 notifications\n";
     }
 }

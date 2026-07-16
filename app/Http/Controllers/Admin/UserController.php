@@ -34,6 +34,7 @@ class UserController extends Controller
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
             'phone' => $validated['phone'] ?? null,
+            'user_code' => User::generateUserCode($validated['role']),
         ]);
         if ($validated['role'] === 'technician') {
             $user->technician()->create([
@@ -42,6 +43,16 @@ class UserController extends Controller
                 'rating_avg' => 0, 'total_jobs' => 0,
             ]);
         }
+        // Notify all admins about the new user
+        app(\App\Services\NotificationService::class)->notifyAllAdmins(
+            'user_created',
+            "New {$validated['role']} account created: {$validated['name']}",
+            [
+                'user_id'   => $user->id,
+                'user_code' => $user->user_code,
+                'role'      => $validated['role'],
+            ]
+        );
         return back()->with('success', 'User created.');
     }
     public function update(Request $request, $id)

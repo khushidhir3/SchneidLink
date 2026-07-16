@@ -25,3 +25,6 @@ Broadcast::channel('request.{requestId}', function ($user, $requestId) {
     }
     return false;
 });
+Broadcast::channel('admins', function ($user) {
+    return $user->isAdmin();
+});

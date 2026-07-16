@@ -14,7 +14,25 @@ class User extends Authenticatable
         'role',
         'phone',
         'avatar',
+        'user_code',
     ];
+    /**
+     * Generate a unique, role-prefixed user code.
+     */
+    public static function generateUserCode(string $role): string
+    {
+        $prefix = match ($role) {
+            'admin'      => 'ADM-',
+            'client'     => 'CLT-',
+            'dispatcher' => 'DSP-',
+            'technician' => 'TECH-',
+            default      => 'USR-',
+        };
+        do {
+            $code = $prefix . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
+        } while (self::where('user_code', $code)->exists());
+        return $code;
+    }
     protected $hidden = [
         'password',
         'remember_token',
