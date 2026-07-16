@@ -15,5 +15,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('path.public', function () {
             return base_path('public');
         });
+
+        // Force HTTPS in production to prevent mixed content issues from reverse proxy
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }
